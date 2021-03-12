@@ -1,0 +1,12 @@
+{
+  "name": "prostamp",
+  "version": "1.0.0",
+  "description": "Incremental asynchronous template rendering",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["templates", "rendering", "incremental", "streams"],
+  "author": "David Mark Clements (@davidmarkclem)",
+  "license": "MIT"
+}
