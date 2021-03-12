@@ -75,9 +75,9 @@ Nesting is possible, arrays are expanded
 
 ```
 
-### `render \`\``
+### ``render `template` ``
 
-The `prostamp.render` function is a tagged template function that has the same qualities as the `prostamp` function 
+The `render` function is a tagged template function that has the same qualities as the `prostamp` function 
 when it comes to promise resolution, array expansion and nesting but it works with native JS template strings. 
 
 ```js
