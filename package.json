@@ -6,7 +6,23 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["templates", "rendering", "incremental", "streams"],
+  "keywords": [
+    "templates",
+    "rendering",
+    "incremental",
+    "streams"
+  ],
   "author": "David Mark Clements (@davidmarkclem)",
-  "license": "MIT"
+  "license": "MIT",
+  "directories": {
+    "example": "examples"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidmarkclements/prostamp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/davidmarkclements/prostamp/issues"
+  },
+  "homepage": "https://github.com/davidmarkclements/prostamp#readme"
 }
