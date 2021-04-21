@@ -30,12 +30,16 @@ Readable.from(prostamp(template, locals)).pipe(process.stdout)
 
 The `template` argument should be a string or Buffer that contains content and template variables.
 
-A template variable is denoted with `__name__`. 
+A template variable is denoted with `__name__`. Template variables may also contain extra meta data
+delimited by `:`. For instance `__name:more:info__`. 
 
 #### Locals
 
 The `locals` argument should be an object that contains keys which correspond to the template variable names.
-The values may be strings, numbers, promises or async iterators as returned from `prostamp`, or arrays.
+The values may be strings, numbers, promises or async iterators as returned from `prostamp`, arrays or async functions or plain functions..
+Async functions and plain functions are called with `(key, meta)` where `key` is the `name` in `__name:more:info__` and meta is an array
+containing any meta data, in the example case it will be `['more', 'info']`. In the case of an async function the returned promise is resolved
+to its value before interpolation.
 
 #### Example
 
@@ -50,12 +54,17 @@ __another__
 More things:
 
 __more__
+
+__dynamic:with:metadata__
 `
 
 const locals = {
   something: 'here it is',
   another: Promise.resolve('promises are auto resolved before rendering'),
-  more: prostamp('Nesting is possible, __items__', { items: ['arrays ', 'are ', Promise.resolve('expanded')] })
+  more: prostamp('Nesting is possible, __items__', { items: ['arrays ', 'are ', Promise.resolve('expanded')] }),
+  async dynamic (key, meta) {
+    return `Name is "${key}", meta[0] is "${meta[0]}" and meta[1] is "${meta[1]}"`
+  }
 }
 
 for await (const output of prostamp(template, locals)) process.stdout.write(output)
@@ -73,12 +82,15 @@ More things:
 
 Nesting is possible, arrays are expanded
 
+Name is "dynamic", meta[0] is "with" and meta[1] is "metadata"
+
 ```
 
 ### ``render `template` ``
 
 The `render` function is a tagged template function that has the same qualities as the `prostamp` function 
-when it comes to promise resolution, array expansion and nesting but it works with native JS template strings. 
+when it comes to promise resolution, array expansion and prostamp async renderer nesting but it works with 
+native JS template strings.
 
 ```js
 import { render } from 'prostamp'

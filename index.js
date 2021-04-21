@@ -32,10 +32,12 @@ async function * prostamp (template, locals) {
   const strings = []
   template += ''
   let last = 0
-  for (const result of template.matchAll(/__([a-zA-Z/\\.]*?)__/g)) {
-    const [match, key] = result
+  for (const result of template.matchAll(/__([a-zA-Z/\\.:]*?)__/g)) {
+    const [match, def] = result
     const { index } = result
-    args.push(locals[key])
+    const [ key, ...meta ]  = def.split(':').map((s) => s.trim())
+    const local = typeof locals[key] === 'function' ? locals[key](key, meta) : locals[key]
+    args.push(local)
     strings.push(template.slice(last, index))
     last = index + match.length
   }
